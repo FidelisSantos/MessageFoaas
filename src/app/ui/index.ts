@@ -12,26 +12,22 @@ export class Index {
     public App(){
         ready.question(" 1 - Cadastrar Usuário \n 2 - Enviar Mensagem \n 3 - Ver histórico de mensagens \n 4 - Sair \n ->  "
                         , (answer) => {
+                            console.log("\n");
                             switch(answer){
                                 case "1": 
-                                    console.log("\n");
                                     this.user.createUser();
                                     break;
                                 case "2": 
-                                    console.log("\n");
                                     this.user.createMessage();
                                     break;
                                 case "3": 
-                                    console.log("\n");
                                     this.user.getUserMessages();
                                     break;
                                 case "4":
-                                    console.log("Encerrada");
+                                    console.log("Encerrada \n");
                                     break;
                                 default:
-                                    console.log("\n"); 
-                                    console.log("Opção inválida");
-                                    console.log("\n");
+                                    console.log("Opção inválida \n");
                                     this.App();
                                     break;
                             }

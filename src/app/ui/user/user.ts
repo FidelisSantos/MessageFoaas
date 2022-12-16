@@ -16,7 +16,7 @@ export class User {
     }
 
     public createMessage(){
-        this.getUserIssuer();
+        this.getUsersender();
         return;
     }
     
@@ -44,14 +44,12 @@ export class User {
                     this.message.getMessage(findUser);
                     return;
                 }else{
-                    console.log(`Código ${+answer} não encontrado`);
-                    console.log("\n");
+                    console.log(`Código ${+answer} não encontrado \n"`);
                     initializeApp();
                     return;
                 }
             }else{
-                console.log(`Favor Informar um código`);
-                console.log("\n");
+                console.log(`Favor Informar um código \n`);
                 initializeApp();
                 return;
             }
@@ -68,7 +66,7 @@ export class User {
                 this.getCode();
                 return;
             }else {
-                console.log("Nome inválido");
+                console.log("Nome inválido \n");
                 initializeApp();
                 return;
             }
@@ -82,17 +80,14 @@ export class User {
                 this.code = +answer;
                 const newUser = new UserModel(this.name, this.code);
                 if (this.userServices.createUser(newUser)){
-                    console.log("Usuário criado")
-                    console.log("\n");
+                    console.log("Usuário criado \n")
                 }else{
-                    console.log("código informado já está sendo utilizado");
-                    console.log("\n");
+                    console.log("código informado já está sendo utilizado \n");
                 }  
                 initializeApp();
                 return;
             }else{
-                console.log("código não pode ser vazio");
-                console.log("\n");
+                console.log("código não pode ser vazio \n");
                 initializeApp();
                 return;
             }
@@ -101,7 +96,7 @@ export class User {
 
 
 
-    private getUserIssuer(){
+    private getUsersender(){
         console.log("\n");
         let users = this.userServices.getUsers();
         if(users.length == 0) {
@@ -110,14 +105,14 @@ export class User {
             initializeApp();
             return;
         }
-        let userIssuer: UserModel;
+        let usersender: UserModel;
         users.forEach(user => 
             console.log(`Código: ${user.getCode()} Nome: ${user.getName()}`));
         ready.question("Digite o código do usuário que enviará a mensagem: ", (answer) =>{
             const findUser = users.find(user => user.getCode() == +answer);
             if (findUser != undefined){
-                userIssuer =  findUser;
-                this.getUserReceiver(users, userIssuer);
+                usersender =  findUser;
+                this.getUserReceiver(users, usersender);
                 return;
             }
             console.log(`Código: ${+answer} não encontrado`);
@@ -127,7 +122,7 @@ export class User {
         });
     }
 
-    private getUserReceiver(users: UserModel[], issuer: UserModel){
+    private getUserReceiver(users: UserModel[], sender: UserModel){
         if(users.length == 0) {
             console.log("Favor cadastrar mais um usuário para conseguir enviar a mensagem");
             initializeApp();
@@ -135,21 +130,21 @@ export class User {
         }
         let userReceiver: UserModel;
         users.forEach(user =>{ 
-            if(user.getCode() != issuer.getCode())
+            if(user.getCode() != sender.getCode())
                 console.log(`Código: ${user.getCode()} Nome: ${user.getName()}`)
             }
            );
         ready.question("Digite o código do usuário que receberá a mensagem: ", (answer) =>{
             console.log("\n");
-            if(+answer == issuer.getCode()){
+            if(+answer == sender.getCode()){
                 console.log("Usuário não pode mandar mensagem para ele mesmo");
-                this.getUserReceiver(users, issuer);
+                this.getUserReceiver(users, sender);
                 return;
             }
             const findUser = users.find(user => user.getCode() == +answer);
             if(findUser != undefined){
                 userReceiver =  findUser;
-                this.message.createMessage(issuer, userReceiver);
+                this.message.createMessage(sender, userReceiver);
                 return;
             }
             console.log(`Código: ${+answer} não encontrado`);

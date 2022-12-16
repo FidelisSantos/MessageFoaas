@@ -16,8 +16,8 @@ export class Message{
         this.requests = new Requests();
     }
 
-    public createMessage(issuer: UserModel , receiver: UserModel){
-        this.typeMessage(issuer , receiver);
+    public createMessage(sender: UserModel , receiver: UserModel){
+        this.typeMessage(sender , receiver);
         return;
     }
 
@@ -27,58 +27,52 @@ export class Message{
     }
     
     private getUserMessages(user: UserModel){
-        const {messageIssuer , messageReceiver} = this.messageServices.getMessage(user);
-        if(messageIssuer.length != 0 || messageReceiver.length != 0) {
-            if(messageIssuer.length > 0 ){
-                console.log("\n");
-                console.log(`Mensagens enviadas por ${user.getName()}, Código ${user.getCode()}`);
-                console.log("\n");
-                messageIssuer.forEach(message => {
-                    if(user.getCode() == message.getIssuer().getCode()){
-                        console.log(`Para -> Usuário: ${message.getReceiver().getName()}, Código: ${message.getIssuer().getCode()} `);
+        const {messageSender , messageReceiver} = this.messageServices.getMessage(user);
+        console.log("\n");
+        if(messageSender.length != 0 || messageReceiver.length != 0) {
+            if(messageSender.length > 0 ){
+                console.log(`Mensagens enviadas por ${user.getName()}, Código ${user.getCode()} \n`);
+                messageSender.forEach(message => {
+                    if(user.getCode() == message.getSender().getCode()){
+                        console.log(`Para -> Usuário: ${message.getReceiver().getName()}, Código: ${message.getSender().getCode()} `);
                         console.log(`Assunto: ${message.getText().subject}`);
-                        console.log(`Mensagem: ${message.getText().message}`);
-                        console.log("\n");
+                        console.log(`Mensagem: ${message.getText().message} \n`);
                     }
                 });
             }
              if(messageReceiver.length > 0 ){
-                console.log("\n");
-                console.log(`Mensagens recebidas por ${user.getName()}, Código ${user.getCode()}`);
-                console.log("\n");
+
+                console.log(`Mensagens recebidas por ${user.getName()}, Código ${user.getCode()} \n`);
                 messageReceiver.forEach(message => {
                     if(user.getCode() == message.getReceiver().getCode()){
-                        console.log(`De -> Usuário: ${message.getIssuer().getName()}, Código: ${message.getIssuer().getCode()} `);
+                        console.log(`De -> Usuário: ${message.getSender().getName()}, Código: ${message.getSender().getCode()} `);
                         console.log(`Assunto: ${message.getText().subject}`);
-                        console.log(`Mensagem: ${message.getText().message}`);
-                        console.log("\n");
+                        console.log(`Mensagem: ${message.getText().message} \n`);
                     }
                 });
             }
         }else{
-            console.log("Usuário não enviou e nem recebeu mensagens");
-            console.log("\n");
+            console.log("Usuário não enviou e nem recebeu mensagens \n");
         }
         initializeApp();
         return;
     }
 
-    private typeMessage(issuer: UserModel , receiver: UserModel){
+    private typeMessage(sender: UserModel , receiver: UserModel){
         ready.question("Deseja enviar uma mensagem apimentada?: \n 1- SIM \n 2- NÃO \n -> ", (answer) =>{
             console.log("\n");
             switch(answer){
                 case '1':
                     this.messageFoaas = true;
-                    this.getSubject(issuer, receiver);
+                    this.getSubject(sender, receiver);
                     break;
                 case '2':
                     this.messageFoaas = false;
-                    this.getSubject(issuer, receiver);
+                    this.getSubject(sender, receiver);
                     break;
                 default:
-                    console.log("Opção inválida");
-                    console.log("\n");
-                    this.typeMessage(issuer, receiver);
+                    console.log("Opção inválida \n");
+                    this.typeMessage(sender, receiver);
                     break;
             }
         })
@@ -86,54 +80,48 @@ export class Message{
 
 
 
-    private getSubject(issuer: UserModel , receiver: UserModel){
+    private getSubject(sender: UserModel , receiver: UserModel){
      ready.question("Informe o assunto da Mensagem:  ", (answer) => {
             console.log("\n");
             if(answer != undefined && answer != null && answer != ""){
                 this.subject =  answer;
-                this.getText(issuer , receiver);
+                this.getText(sender , receiver);
                 return;   
             }
-            console.log("\n");
-            console.log("Assunto inválido");
-            console.log("\n");
-            this.getSubject(issuer , receiver);
+            console.log("Assunto inválido \n");
+            this.getSubject(sender , receiver);
             return;
         });
     }
 
-    private async getText(issuer: UserModel , receiver: UserModel){
+    private async getText(sender: UserModel , receiver: UserModel){
         if(this.messageFoaas) {
-            this.text = await this.requests.ApiFoaas(issuer, receiver);
-            this.sendMessage(issuer , receiver);
+            this.text = await this.requests.ApiFoaas(sender, receiver);
+            this.sendMessage(sender , receiver);
             return;
         }
         ready.question("Informe o texto da mensagem:  ", (answer) => {
             console.log("\n");
             if(answer != undefined && answer != null && answer != ""){
                 this.text =  answer;
-                this.sendMessage(issuer , receiver);
+                this.sendMessage(sender , receiver);
                 return;
             }
-            console.log("\n");
-            console.log("Texto inválido");
-            console.log("\n");
-            this.getText(issuer , receiver);
+            console.log("Texto inválido \n");
+            this.getText(sender , receiver);
             return;
         });
     }
 
-    private sendMessage(issuer: UserModel , receiver: UserModel){
+    private sendMessage(sender: UserModel , receiver: UserModel){
         const message : TMessage = {
             subject: this.subject,
             message: this.text
         }
-        if(this.messageServices.createMessage(issuer, receiver, message)){
-            console.log("Mensagem enviada")
-            console.log("\n");
+        if(this.messageServices.createMessage(sender, receiver, message)){
+            console.log("Mensagem enviada \n")
         }else{
-            console.log("Erro ao enviar Mensagem");
-            console.log("\n");
+            console.log("Erro ao enviar Mensagem \n");
         } 
         initializeApp();
         return;

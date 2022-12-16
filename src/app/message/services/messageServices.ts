@@ -14,32 +14,33 @@ export class messageServices {
         this.repoUser = new userRepository();
     }
 
-    public createMessage(issuer: UserModel, receiver: UserModel, message : TMessage){
+    public createMessage(sender: UserModel, receiver: UserModel, message : TMessage){
         if(!this.repoUser.userExists(receiver) || 
-            !this.repoUser.userExists(issuer) || issuer.getCode() === receiver.getCode()) return false;
-        let newMessage = new MessageModel(receiver, issuer, message);
+            !this.repoUser.userExists(sender) || sender.getCode() === receiver.getCode()) return false;
+        let newMessage = new MessageModel(receiver, sender, message);
         this.repoMessage.createMessage(newMessage);
         return true;
     }
 
     public getAllMessage(){
         this.repoMessage.getAllMessage();
+        return;
     }
 
     public getMessage(user: UserModel){
         let messages = this.repoMessage.getAllMessage();
-        let messageIssuer : Array<MessageModel> = [];
+        let messageSender : Array<MessageModel> = [];
         let messageReceiver : Array<MessageModel> = [];
         messages.forEach(message =>{
             if(message.getReceiver().getCode() == user.getCode()){
                 messageReceiver.push(message);
             }
-            if(message.getIssuer().getCode() == user.getCode()){
-                messageIssuer.push(message)
+            if(message.getSender().getCode() == user.getCode()){
+                messageSender.push(message)
             }
         })
         return {
-            messageIssuer,
+            messageSender,
             messageReceiver
         }
     }
