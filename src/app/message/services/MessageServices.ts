@@ -1,34 +1,34 @@
-import { userRepository } from '../../user/repository/userRepository';
-import { messageRepository } from '../repository/messageRepository';
+import { UserRepository } from '../../user/repository/UserRepository';
+import { MessageRepository } from '../repository/MessageRepository';
 import { TMessage } from '../../types/TMessage';
 import { MessageModel } from '../../model/MessageModel';
 import { UserModel } from '../../model/UserModel';
 
-export class messageServices {
+export class MessageServices {
 
-    private repoMessage : messageRepository;
-    private repoUser : userRepository;
+    private messageRepository : MessageRepository;
+    private userRepository : UserRepository;
 
     constructor() {
-        this.repoMessage = new messageRepository();
-        this.repoUser = new userRepository();
+        this.messageRepository = new MessageRepository();
+        this.userRepository = new UserRepository();
     }
 
     public createMessage(sender: UserModel, receiver: UserModel, message : TMessage){
-        if(!this.repoUser.userExists(receiver) || 
-            !this.repoUser.userExists(sender) || sender.getCode() === receiver.getCode()) return false;
+        if(!this.userRepository.userExists(receiver) || 
+            !this.userRepository.userExists(sender) || sender.getCode() === receiver.getCode()) return false;
         let newMessage = new MessageModel(receiver, sender, message);
-        this.repoMessage.createMessage(newMessage);
+        this.messageRepository.createMessage(newMessage);
         return true;
     }
 
     public getAllMessage(){
-        this.repoMessage.getAllMessage();
+        this.messageRepository.getAllMessage();
         return;
     }
 
     public getMessage(user: UserModel){
-        let messages = this.repoMessage.getAllMessage();
+        let messages = this.messageRepository.getAllMessage();
         let messageSender : Array<MessageModel> = [];
         let messageReceiver : Array<MessageModel> = [];
         messages.forEach(message =>{

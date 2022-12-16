@@ -1,18 +1,18 @@
 import { initializeApp, ready } from '../../..';
-import { messageServices } from '../../message/services/messageServices';
+import { MessageServices } from '../../message/services/MessageServices';
 import { UserModel } from '../../model/UserModel';
 import { TMessage } from '../../types/TMessage';
 import { Requests } from '../../requests/requests';
 
 export class Message{
-    private messageServices: messageServices;
+    private messageServices: MessageServices;
     private requests: Requests;
     private subject: string = "";
     private text: string = "";
     private messageFoaas : boolean = false;
 
     constructor( ){
-        this.messageServices = new messageServices();
+        this.messageServices = new MessageServices();
         this.requests = new Requests();
     }
 

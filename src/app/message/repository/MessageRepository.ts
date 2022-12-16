@@ -1,6 +1,6 @@
 import { MessageModel } from '../../model/MessageModel';
 
-export class messageRepository{
+export class MessageRepository{
 
     private messageRepository : Array<MessageModel> = [];
 

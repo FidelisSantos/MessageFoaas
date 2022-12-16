@@ -1,5 +1,5 @@
 import { ready } from "../..";
-import { User } from "./user/user";
+import { User } from "./user/User";
 
 export class Index {
     private user: User;

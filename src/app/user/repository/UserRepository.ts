@@ -1,7 +1,7 @@
 import { UserModel } from '../../model/UserModel';
 
 
-export class userRepository {
+export class UserRepository {
 
     private userList :Array<UserModel> = [];
 

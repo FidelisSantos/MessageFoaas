@@ -1,5 +1,5 @@
 import readline from "readline";
-import { Index } from './app/ui/index';
+import { Index } from './app/ui/Index';
 
 export const ready = readline.createInterface({
     input: process.stdin,

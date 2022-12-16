@@ -1,17 +1,17 @@
 
 import { initializeApp, ready } from '../../../index';
 import { UserModel } from '../../model/UserModel';
-import { userServices } from '../../user/services/userServices';
-import { Message } from '../message/message';
+import { UserServices } from '../../user/services/UserServices';
+import { Message } from '../message/Message';
 
 export class User {
     private name : string = "";
     private code : number = 0;
-    private userServices: userServices;
+    private userServices: UserServices;
     private message : Message;
 
     constructor(){
-        this.userServices = new userServices();
+        this.userServices = new UserServices();
         this.message = new Message();
     }
 
