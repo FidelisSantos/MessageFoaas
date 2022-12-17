@@ -99,7 +99,7 @@ export class User {
     private getUsersender(){
         console.log("\n");
         let users = this.userServices.getUsers();
-        if(users.length == 0) {
+        if(users.length <= 1) {
             console.log("Favor cadastrar no minimo 2 usuários");
             console.log("\n");
             initializeApp();
