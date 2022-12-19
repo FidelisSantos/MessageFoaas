@@ -66,7 +66,7 @@ export class Message {
         return;
     }
 
-    private typeMessage(sender: UserModel , receiver: UserModel){
+    private typeMessage(sender: UserModel , receiver: UserModel) {
         ready.question("Deseja enviar uma mensagem apimentada?: \n 1- SIM \n 2- NÃO \n -> ", 
         (answer) =>{
             console.log("\n");
@@ -89,10 +89,10 @@ export class Message {
 
 
 
-    private getSubject(sender: UserModel , receiver: UserModel){
+    private getSubject(sender: UserModel , receiver: UserModel) {
      ready.question("Informe o assunto da Mensagem:  ", (answer) => {
             console.log("\n");
-            if(answer != undefined && answer != null && answer != ""){
+            if(answer != undefined && answer != null && answer != "") {
                 this.subject =  answer;
                 this.getText(sender , receiver);
                 return;   
@@ -103,7 +103,7 @@ export class Message {
         });
     }
 
-    private async getText(sender: UserModel , receiver: UserModel){
+    private async getText(sender: UserModel , receiver: UserModel) {
         if(this.messageFoaas) {
             this.text = await this.requests.ApiFoaas(sender, receiver);
             this.sendMessage(sender , receiver);
@@ -111,7 +111,7 @@ export class Message {
         }
         ready.question("Informe o texto da mensagem:  ", (answer) => {
             console.log("\n");
-            if(answer != undefined && answer != null && answer != ""){
+            if(answer != undefined && answer != null && answer != "") {
                 this.text =  answer;
                 this.sendMessage(sender , receiver);
                 return;
@@ -122,12 +122,12 @@ export class Message {
         });
     }
 
-    private sendMessage(sender: UserModel , receiver: UserModel){
+    private sendMessage(sender: UserModel , receiver: UserModel) {
         const message : TMessage = {
             subject: this.subject,
             message: this.text
         }
-        if(this.messageServices.createMessage(sender, receiver, message)){
+        if(this.messageServices.createMessage(sender, receiver, message)) {
             console.log("Mensagem enviada \n")
         }else{
             console.log("Erro ao enviar Mensagem \n");

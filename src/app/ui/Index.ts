@@ -4,12 +4,12 @@ import { User } from "./user/User";
 export class Index {
     private user: User;
     
-    constructor(){
+    constructor() {
         this.user = new User();
     }
 
     
-    public App(){
+    public App() {
         ready.question(" 1 - Cadastrar Usuário \n 2 - Enviar Mensagem \n 3 - Ver histórico de mensagens \n 4 - Sair \n ->  "
                         , (answer) => {
                             console.log("\n");

@@ -10,28 +10,28 @@ export class User {
     private userServices: UserServices;
     private message : Message;
 
-    constructor(){
+    constructor() {
         this.userServices = new UserServices();
         this.message = new Message();
     }
 
-    public createMessage(){
+    public createMessage() {
         this.getUsersender();
         return;
     }
     
-    public createUser(){
+    public createUser() {
         this.getName();
         return;
     }
 
-    public getUserMessages(){
+    public getUserMessages() {
         this.getUser();
         return;
     }
     
 
-    private getUser(){
+    private getUser() {
         const users = this.userServices.getUsers();
         users.forEach(user => 
             console.log(`Código: ${user.getCode()} Nome: ${user.getName()}`)
@@ -58,8 +58,8 @@ export class User {
 
 
 
-    private getName(){
-        ready.question("Digite um nome: ", (answer) =>{
+    private getName() {
+        ready.question("Digite um nome: ", (answer) => {
             console.log("\n");
             if(answer.length > 0){
                 this.name = answer;
@@ -73,8 +73,8 @@ export class User {
         });
     }
 
-    private getCode(){
-        ready.question("Digite um código: ", (answer) =>{
+    private getCode() {
+        ready.question("Digite um código: ", (answer) => {
             console.log("\n");
             if(answer.length > 0){
                 this.code = +answer;
