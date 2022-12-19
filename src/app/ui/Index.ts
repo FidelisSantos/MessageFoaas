@@ -32,5 +32,5 @@ export class Index {
                                     break;
                             }
                         });
-    };
+    }
 }

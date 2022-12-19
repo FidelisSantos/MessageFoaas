@@ -15,7 +15,7 @@ export class UserRepository {
     }
 
     public userExists(newUser : UserModel){
-        let isValid = this.userList.find(user => user.getCode() == newUser.getCode());
+        const isValid = this.userList.find(user => user.getCode() == newUser.getCode());
         if (isValid == undefined)  return true;
         return false;    
     }

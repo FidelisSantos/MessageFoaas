@@ -5,8 +5,8 @@ import { UserServices } from '../../user/services/UserServices';
 import { Message } from '../message/Message';
 
 export class User {
-    private name : string = "";
-    private code : number = 0;
+    private name  = "";
+    private code  = 0;
     private userServices: UserServices;
     private message : Message;
 
@@ -32,7 +32,7 @@ export class User {
     
 
     private getUser(){
-        let users = this.userServices.getUsers();
+        const users = this.userServices.getUsers();
         users.forEach(user => 
             console.log(`Código: ${user.getCode()} Nome: ${user.getName()}`)
             );
@@ -98,7 +98,7 @@ export class User {
 
     private getUsersender(){
         console.log("\n");
-        let users = this.userServices.getUsers();
+        const users = this.userServices.getUsers();
         if(users.length <= 1) {
             console.log("Favor cadastrar no minimo 2 usuários");
             console.log("\n");

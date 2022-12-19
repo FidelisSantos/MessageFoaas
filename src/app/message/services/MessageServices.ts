@@ -17,7 +17,7 @@ export class MessageServices {
     public createMessage(sender: UserModel, receiver: UserModel, message : TMessage){
         if(!this.userRepository.userExists(receiver) || 
             !this.userRepository.userExists(sender) || sender.getCode() === receiver.getCode()) return false;
-        let newMessage = new MessageModel(receiver, sender, message);
+        const newMessage = new MessageModel(receiver, sender, message);
         this.messageRepository.createMessage(newMessage);
         return true;
     }
@@ -28,9 +28,9 @@ export class MessageServices {
     }
 
     public getMessage(user: UserModel){
-        let messages = this.messageRepository.getAllMessage();
-        let messageSender : Array<MessageModel> = [];
-        let messageReceiver : Array<MessageModel> = [];
+        const messages = this.messageRepository.getAllMessage();
+        const messageSender : Array<MessageModel> = [];
+        const messageReceiver : Array<MessageModel> = [];
         messages.forEach(message =>{
             if(message.getReceiver().getCode() == user.getCode()){
                 messageReceiver.push(message);

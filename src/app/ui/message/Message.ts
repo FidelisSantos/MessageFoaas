@@ -7,9 +7,9 @@ import { Requests } from '../../requests/requests';
 export class Message{
     private messageServices: MessageServices;
     private requests: Requests;
-    private subject: string = "";
-    private text: string = "";
-    private messageFoaas : boolean = false;
+    private subject = "";
+    private text = "";
+    private messageFoaas  = false;
 
     constructor( ){
         this.messageServices = new MessageServices();
