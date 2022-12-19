@@ -49,7 +49,7 @@ export class User {
                     return;
                 }
             }else{
-                console.log(`Favor Informar um código \n`);
+                console.log(`Favor informar um código \n`);
                 initializeApp();
                 return;
             }
@@ -82,12 +82,12 @@ export class User {
                 if (this.userServices.createUser(newUser)){
                     console.log("Usuário criado \n")
                 }else{
-                    console.log("código informado já está sendo utilizado \n");
+                    console.log("Código informado já está sendo utilizado \n");
                 }  
                 initializeApp();
                 return;
             }else{
-                console.log("código não pode ser vazio \n");
+                console.log("Código não pode ser vazio \n");
                 initializeApp();
                 return;
             }
@@ -105,14 +105,14 @@ export class User {
             initializeApp();
             return;
         }
-        let usersender: UserModel;
+        let userSender: UserModel;
         users.forEach(user => 
             console.log(`Código: ${user.getCode()} Nome: ${user.getName()}`));
         ready.question("Digite o código do usuário que enviará a mensagem: ", (answer) =>{
             const findUser = users.find(user => user.getCode() == +answer);
             if (findUser != undefined){
-                usersender =  findUser;
-                this.getUserReceiver(users, usersender);
+                userSender =  findUser;
+                this.getUserReceiver(users, userSender);
                 return;
             }
             console.log(`Código: ${+answer} não encontrado`);
@@ -122,27 +122,22 @@ export class User {
         });
     }
 
-    private getUserReceiver(users: UserModel[], sender: UserModel){
-        if(users.length == 0) {
-            console.log("Favor cadastrar mais um usuário para conseguir enviar a mensagem");
-            initializeApp();
-            return;
-        }
+    private getUserReceiver(users: UserModel[], sender: UserModel) {
         let userReceiver: UserModel;
         users.forEach(user =>{ 
             if(user.getCode() != sender.getCode())
                 console.log(`Código: ${user.getCode()} Nome: ${user.getName()}`)
             }
            );
-        ready.question("Digite o código do usuário que receberá a mensagem: ", (answer) =>{
+        ready.question("Digite o código do usuário que receberá a mensagem: ", (answer) => {
             console.log("\n");
-            if(+answer == sender.getCode()){
+            if(+answer == sender.getCode()) {
                 console.log("Usuário não pode mandar mensagem para ele mesmo");
                 this.getUserReceiver(users, sender);
                 return;
             }
             const findUser = users.find(user => user.getCode() == +answer);
-            if(findUser != undefined){
+            if(findUser != undefined) {
                 userReceiver =  findUser;
                 this.message.createMessage(sender, userReceiver);
                 return;

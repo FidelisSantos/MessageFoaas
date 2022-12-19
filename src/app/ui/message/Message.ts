@@ -4,48 +4,56 @@ import { UserModel } from '../../model/UserModel';
 import { TMessage } from '../../types/TMessage';
 import { Requests } from '../../requests/requests';
 
-export class Message{
+export class Message {
     private messageServices: MessageServices;
     private requests: Requests;
     private subject = "";
     private text = "";
     private messageFoaas  = false;
 
-    constructor( ){
+    constructor() {
         this.messageServices = new MessageServices();
         this.requests = new Requests();
     }
 
-    public createMessage(sender: UserModel , receiver: UserModel){
+    public createMessage(sender: UserModel , receiver: UserModel) {
         this.typeMessage(sender , receiver);
         return;
     }
 
-    public getMessage(user: UserModel){
+    public getMessage(user: UserModel) {
         this.getUserMessages(user);
         return;
     }
     
-    private getUserMessages(user: UserModel){
+    private getUserMessages(user: UserModel) {
         const {messageSender , messageReceiver} = this.messageServices.getMessage(user);
         console.log("\n");
         if(messageSender.length != 0 || messageReceiver.length != 0) {
             if(messageSender.length > 0 ){
-                console.log(`Mensagens enviadas por ${user.getName()}, Código ${user.getCode()} \n`);
+                console.log(
+                    `Mensagens enviadas por ${user.getName()}
+                    , Código ${user.getCode()} \n`);
                 messageSender.forEach(message => {
                     if(user.getCode() == message.getSender().getCode()){
-                        console.log(`Para -> Usuário: ${message.getReceiver().getName()}, Código: ${message.getSender().getCode()} `);
+                        console.log(
+                            `Para -> Usuário: ${message.getReceiver().getName()}, 
+                            Código: ${message.getSender().getCode()} `);
                         console.log(`Assunto: ${message.getText().subject}`);
                         console.log(`Mensagem: ${message.getText().message} \n`);
                     }
                 });
             }
-             if(messageReceiver.length > 0 ){
+             if(messageReceiver.length > 0 ) {
 
-                console.log(`Mensagens recebidas por ${user.getName()}, Código ${user.getCode()} \n`);
+                console.log(
+                    `Mensagens recebidas por ${user.getName()}
+                    , Código ${user.getCode()} \n`);
                 messageReceiver.forEach(message => {
                     if(user.getCode() == message.getReceiver().getCode()){
-                        console.log(`De -> Usuário: ${message.getSender().getName()}, Código: ${message.getSender().getCode()} `);
+                        console.log(
+                            `De -> Usuário: ${message.getSender().getName()}
+                            , Código: ${message.getSender().getCode()} `);
                         console.log(`Assunto: ${message.getText().subject}`);
                         console.log(`Mensagem: ${message.getText().message} \n`);
                     }
@@ -59,7 +67,8 @@ export class Message{
     }
 
     private typeMessage(sender: UserModel , receiver: UserModel){
-        ready.question("Deseja enviar uma mensagem apimentada?: \n 1- SIM \n 2- NÃO \n -> ", (answer) =>{
+        ready.question("Deseja enviar uma mensagem apimentada?: \n 1- SIM \n 2- NÃO \n -> ", 
+        (answer) =>{
             console.log("\n");
             switch(answer){
                 case '1':

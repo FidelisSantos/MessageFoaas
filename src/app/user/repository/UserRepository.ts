@@ -10,11 +10,11 @@ export class UserRepository {
         this.userList.push(newUser);
     }
 
-    public getUsers(){
+    public getUsers() {
         return this.userList;
     }
 
-    public userExists(newUser : UserModel){
+    public userExists(newUser : UserModel) {
         const isValid = this.userList.find(user => user.getCode() == newUser.getCode());
         if (isValid == undefined)  return true;
         return false;    

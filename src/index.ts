@@ -8,7 +8,7 @@ export const ready = readline.createInterface({
 
 const index : Index = new Index();
 
-export function initializeApp(){
+export function initializeApp() {
     index.App();
 }
 

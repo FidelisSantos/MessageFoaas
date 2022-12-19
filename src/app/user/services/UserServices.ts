@@ -2,10 +2,10 @@ import { UserModel } from "../../model/UserModel";
 import { UserRepository } from '../repository/UserRepository';
 
 
-export class UserServices{
+export class UserServices {
     private userRepository: UserRepository
 
-    constructor(){
+    constructor() {
         this.userRepository = new UserRepository();
     }
 
@@ -16,7 +16,7 @@ export class UserServices{
         return true;
     }
 
-    public getUsers(){
+    public getUsers() {
         return this.userRepository.getUsers();
     }
 }

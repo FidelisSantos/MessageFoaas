@@ -2,7 +2,7 @@ import axios from 'axios';
 import { UserModel } from '../model/UserModel';
 import { endPoints } from './endpoint/endPoints';
 
-export class Requests{
+export class Requests {
 
     public async ApiFoaas(sender: UserModel , receiver: UserModel) {
         const random = Math.floor(Math.random() * 5 );

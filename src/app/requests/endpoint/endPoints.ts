@@ -1,5 +1,5 @@
-export function endPoints(random: number, from: string, name: string){
-    switch(random){
+export function endPoints(random: number, from: string, name: string) {
+    switch(random) {
         case 0: 
             return `/essex/${name}/${from}`;
         case 1: 

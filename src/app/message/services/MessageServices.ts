@@ -14,28 +14,29 @@ export class MessageServices {
         this.userRepository = new UserRepository();
     }
 
-    public createMessage(sender: UserModel, receiver: UserModel, message : TMessage){
+    public createMessage(sender: UserModel, receiver: UserModel, message : TMessage) {
         if(!this.userRepository.userExists(receiver) || 
-            !this.userRepository.userExists(sender) || sender.getCode() === receiver.getCode()) return false;
+            !this.userRepository.userExists(sender) || 
+            sender.getCode() === receiver.getCode()) return false;
         const newMessage = new MessageModel(receiver, sender, message);
         this.messageRepository.createMessage(newMessage);
         return true;
     }
 
-    public getAllMessage(){
+    public getAllMessage() {
         this.messageRepository.getAllMessage();
         return;
     }
 
-    public getMessage(user: UserModel){
+    public getMessage(user: UserModel) {
         const messages = this.messageRepository.getAllMessage();
         const messageSender : Array<MessageModel> = [];
         const messageReceiver : Array<MessageModel> = [];
         messages.forEach(message =>{
-            if(message.getReceiver().getCode() == user.getCode()){
+            if(message.getReceiver().getCode() == user.getCode()) {
                 messageReceiver.push(message);
             }
-            if(message.getSender().getCode() == user.getCode()){
+            if(message.getSender().getCode() == user.getCode()) {
                 messageSender.push(message)
             }
         })

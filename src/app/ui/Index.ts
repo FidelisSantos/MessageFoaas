@@ -13,7 +13,7 @@ export class Index {
         ready.question(" 1 - Cadastrar Usuário \n 2 - Enviar Mensagem \n 3 - Ver histórico de mensagens \n 4 - Sair \n ->  "
                         , (answer) => {
                             console.log("\n");
-                            switch(answer){
+                            switch(answer) {
                                 case "1": 
                                     this.user.createUser();
                                     break;
