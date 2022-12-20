@@ -1,11 +1,11 @@
-import { UserModel } from '../../model/UserModel';
+import { ListUser } from '../../types/ListUser';
 
 
 export class UserRepository {
 
-    private userList :Array<UserModel> = [];
+    private userList :Array<ListUser> = [];
 
-    public createUser(newUser : UserModel) {
+    public createUser(newUser : ListUser) {
         if(!this.userExists(newUser)) return false;
         this.userList.push(newUser);
     }
@@ -14,8 +14,8 @@ export class UserRepository {
         return this.userList;
     }
 
-    public userExists(newUser : UserModel) {
-        const isValid = this.userList.find(user => user.getCode() == newUser.getCode());
+    public userExists(newUser : ListUser) {
+        const isValid = this.userList.find(user => user.code== newUser.code);
         if (isValid == undefined)  return true;
         return false;    
     }

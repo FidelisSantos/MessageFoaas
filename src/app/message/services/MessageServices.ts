@@ -1,8 +1,8 @@
 import { UserRepository } from '../../user/repository/UserRepository';
 import { MessageRepository } from '../repository/MessageRepository';
 import { TMessage } from '../../types/TMessage';
-import { MessageModel } from '../../model/MessageModel';
-import { UserModel } from '../../model/UserModel';
+import { ListUser } from '../../types/ListUser';
+import { ListMessage } from '../../types/ListMessage';
 
 export class MessageServices {
 
@@ -14,11 +14,11 @@ export class MessageServices {
         this.userRepository = new UserRepository();
     }
 
-    public createMessage(sender: UserModel, receiver: UserModel, message : TMessage) {
+    public createMessage(sender: ListUser, receiver: ListUser, message : TMessage) {
         if(!this.userRepository.userExists(receiver) || 
             !this.userRepository.userExists(sender) || 
-            sender.getCode() === receiver.getCode()) return false;
-        const newMessage = new MessageModel(receiver, sender, message);
+            sender.code === receiver.code) return false;
+        const newMessage : ListMessage = {receiver, sender, message};
         this.messageRepository.createMessage(newMessage);
         return true;
     }
@@ -28,15 +28,15 @@ export class MessageServices {
         return;
     }
 
-    public getMessage(user: UserModel) {
+    public getMessage(user: ListUser) {
         const messages = this.messageRepository.getAllMessage();
-        const messageSender : Array<MessageModel> = [];
-        const messageReceiver : Array<MessageModel> = [];
+        const messageSender : Array<ListMessage> = [];
+        const messageReceiver : Array<ListMessage> = [];
         messages.forEach(message =>{
-            if(message.getReceiver().getCode() == user.getCode()) {
+            if(message.receiver.code == user.code) {
                 messageReceiver.push(message);
             }
-            if(message.getSender().getCode() == user.getCode()) {
+            if(message.sender.code == user.code) {
                 messageSender.push(message)
             }
         })

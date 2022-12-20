@@ -1,6 +1,6 @@
 
 import { initializeApp, ready } from '../../../index';
-import { UserModel } from '../../model/UserModel';
+import { ListUser } from '../../types/ListUser';
 import { UserServices } from '../../user/services/UserServices';
 import { Message } from '../message/Message';
 
@@ -34,21 +34,21 @@ export class User {
     private getUser() {
         const users = this.userServices.getUsers();
         users.forEach(user => 
-            console.log(`Código: ${user.getCode()} Nome: ${user.getName()}`)
+            console.log(`Código: ${user.code} Nome: ${user.name}`)
             );
-        ready.question("Digite o código do usuário que quer ver o histórico: ", (answer) =>{
+        ready.question("Digite o código do usuário que quer ver o histórico: ", (answer) => {
             console.log("\n");
-            if(answer != "" || answer != null || answer != undefined){
-                const findUser = users.find(user => user.getCode() == +answer);
-                if(findUser != undefined){
+            if(answer != "" || answer != null || answer != undefined) {
+                const findUser = users.find(user => user.code == +answer);
+                if(findUser != undefined) {
                     this.message.getMessage(findUser);
                     return;
-                }else{
+                }else {
                     console.log(`Código ${+answer} não encontrado \n"`);
                     initializeApp();
                     return;
                 }
-            }else{
+            }else {
                 console.log(`Favor informar um código \n`);
                 initializeApp();
                 return;
@@ -78,15 +78,17 @@ export class User {
             console.log("\n");
             if(answer.length > 0){
                 this.code = +answer;
-                const newUser = new UserModel(this.name, this.code);
-                if (this.userServices.createUser(newUser)){
+                const newUser : ListUser =  {
+                    name : this.name, 
+                    code : this.code};
+                if (this.userServices.createUser(newUser)) {
                     console.log("Usuário criado \n")
-                }else{
+                }else {
                     console.log("Código informado já está sendo utilizado \n");
                 }  
                 initializeApp();
                 return;
-            }else{
+            }else {
                 console.log("Código não pode ser vazio \n");
                 initializeApp();
                 return;
@@ -96,7 +98,7 @@ export class User {
 
 
 
-    private getUsersender(){
+    private getUsersender() {
         console.log("\n");
         const users = this.userServices.getUsers();
         if(users.length <= 1) {
@@ -105,12 +107,12 @@ export class User {
             initializeApp();
             return;
         }
-        let userSender: UserModel;
+        let userSender: ListUser;
         users.forEach(user => 
-            console.log(`Código: ${user.getCode()} Nome: ${user.getName()}`));
-        ready.question("Digite o código do usuário que enviará a mensagem: ", (answer) =>{
-            const findUser = users.find(user => user.getCode() == +answer);
-            if (findUser != undefined){
+            console.log(`Código: ${user.code} Nome: ${user.name}`));
+        ready.question("Digite o código do usuário que enviará a mensagem: ", (answer) => {
+            const findUser = users.find(user => user.code == +answer);
+            if (findUser != undefined) {
                 userSender =  findUser;
                 this.getUserReceiver(users, userSender);
                 return;
@@ -122,21 +124,21 @@ export class User {
         });
     }
 
-    private getUserReceiver(users: UserModel[], sender: UserModel) {
-        let userReceiver: UserModel;
-        users.forEach(user =>{ 
-            if(user.getCode() != sender.getCode())
-                console.log(`Código: ${user.getCode()} Nome: ${user.getName()}`)
+    private getUserReceiver(users: ListUser[], sender: ListUser) {
+        let userReceiver: ListUser;
+        users.forEach(user => { 
+            if(user.code != sender.code)
+                console.log(`Código: ${user.code} Nome: ${user.name}`)
             }
            );
         ready.question("Digite o código do usuário que receberá a mensagem: ", (answer) => {
             console.log("\n");
-            if(+answer == sender.getCode()) {
+            if(+answer == sender.code) {
                 console.log("Usuário não pode mandar mensagem para ele mesmo");
                 this.getUserReceiver(users, sender);
                 return;
             }
-            const findUser = users.find(user => user.getCode() == +answer);
+            const findUser = users.find(user => user.code == +answer);
             if(findUser != undefined) {
                 userReceiver =  findUser;
                 this.message.createMessage(sender, userReceiver);

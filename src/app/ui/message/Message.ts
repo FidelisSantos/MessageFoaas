@@ -1,8 +1,8 @@
 import { initializeApp, ready } from '../../..';
 import { MessageServices } from '../../message/services/MessageServices';
-import { UserModel } from '../../model/UserModel';
 import { TMessage } from '../../types/TMessage';
 import { Requests } from '../../requests/requests';
+import { ListUser } from '../../types/ListUser';
 
 export class Message {
     private messageServices: MessageServices;
@@ -16,59 +16,55 @@ export class Message {
         this.requests = new Requests();
     }
 
-    public createMessage(sender: UserModel , receiver: UserModel) {
+    public createMessage(sender: ListUser , receiver: ListUser) {
         this.typeMessage(sender , receiver);
         return;
     }
 
-    public getMessage(user: UserModel) {
+    public getMessage(user: ListUser) {
         this.getUserMessages(user);
         return;
     }
     
-    private getUserMessages(user: UserModel) {
+    private getUserMessages(user: ListUser) {
         const {messageSender , messageReceiver} = this.messageServices.getMessage(user);
         console.log("\n");
         if(messageSender.length != 0 || messageReceiver.length != 0) {
             if(messageSender.length > 0 ){
                 console.log(
-                    `Mensagens enviadas por ${user.getName()}
-                    , Código ${user.getCode()} \n`);
+                    `Mensagens enviadas por ${user.name}, Código ${user.code} \n`);
                 messageSender.forEach(message => {
-                    if(user.getCode() == message.getSender().getCode()){
+                    if(user.code == message.sender.code) {
                         console.log(
-                            `Para -> Usuário: ${message.getReceiver().getName()}, 
-                            Código: ${message.getSender().getCode()} `);
-                        console.log(`Assunto: ${message.getText().subject}`);
-                        console.log(`Mensagem: ${message.getText().message} \n`);
+                            `Para -> Usuário: ${message.receiver.name}, Código: ${message.receiver.code} `);
+                        console.log(`Assunto: ${message.message.subject}`);
+                        console.log(`Mensagem: ${message.message.message} \n`);
                     }
                 });
             }
              if(messageReceiver.length > 0 ) {
 
                 console.log(
-                    `Mensagens recebidas por ${user.getName()}
-                    , Código ${user.getCode()} \n`);
+                    `Mensagens recebidas por ${user.name}, Código ${user.code} \n`);
                 messageReceiver.forEach(message => {
-                    if(user.getCode() == message.getReceiver().getCode()){
+                    if(user.code== message.receiver.code) {
                         console.log(
-                            `De -> Usuário: ${message.getSender().getName()}
-                            , Código: ${message.getSender().getCode()} `);
-                        console.log(`Assunto: ${message.getText().subject}`);
-                        console.log(`Mensagem: ${message.getText().message} \n`);
+                            `De -> Usuário: ${message.sender.name}, Código: ${message.sender.code} `);
+                        console.log(`Assunto: ${message.message.subject}`);
+                        console.log(`Mensagem: ${message.message.message} \n`);
                     }
                 });
             }
-        }else{
+        }else {
             console.log("Usuário não enviou e nem recebeu mensagens \n");
         }
         initializeApp();
         return;
     }
 
-    private typeMessage(sender: UserModel , receiver: UserModel) {
+    private typeMessage(sender: ListUser , receiver: ListUser) {
         ready.question("Deseja enviar uma mensagem apimentada?: \n 1- SIM \n 2- NÃO \n -> ", 
-        (answer) =>{
+        (answer) => {
             console.log("\n");
             switch(answer){
                 case '1':
@@ -89,7 +85,7 @@ export class Message {
 
 
 
-    private getSubject(sender: UserModel , receiver: UserModel) {
+    private getSubject(sender: ListUser , receiver: ListUser) {
      ready.question("Informe o assunto da Mensagem:  ", (answer) => {
             console.log("\n");
             if(answer != undefined && answer != null && answer != "") {
@@ -103,7 +99,7 @@ export class Message {
         });
     }
 
-    private async getText(sender: UserModel , receiver: UserModel) {
+    private async getText(sender: ListUser , receiver: ListUser) {
         if(this.messageFoaas) {
             this.text = await this.requests.ApiFoaas(sender, receiver);
             this.sendMessage(sender , receiver);
@@ -122,7 +118,7 @@ export class Message {
         });
     }
 
-    private sendMessage(sender: UserModel , receiver: UserModel) {
+    private sendMessage(sender: ListUser , receiver: ListUser) {
         const message : TMessage = {
             subject: this.subject,
             message: this.text

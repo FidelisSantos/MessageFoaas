@@ -1,4 +1,4 @@
-import { UserModel } from "../../model/UserModel";
+import { ListUser } from "../../types/ListUser";
 import { UserRepository } from '../repository/UserRepository';
 
 
@@ -10,7 +10,7 @@ export class UserServices {
     }
 
 
-    public createUser(newUser : UserModel) {
+    public createUser(newUser : ListUser) {
         if(!this.userRepository.userExists(newUser)) return false;
         this.userRepository.createUser(newUser);
         return true;
