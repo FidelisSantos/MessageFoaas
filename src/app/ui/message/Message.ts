@@ -9,19 +9,19 @@ export class Message {
     private requests: Requests;
     private subject = "";
     private text = "";
-    private messageFoaas  = false;
+    private messageFoaas = false;
 
     constructor() {
         this.messageServices = new MessageServices();
         this.requests = new Requests();
     }
 
-    public createMessage(sender: ListUser , receiver: ListUser) {
+    public create(sender: ListUser , receiver: ListUser) {
         this.typeMessage(sender , receiver);
         return;
     }
 
-    public getMessage(user: ListUser) {
+    public get(user: ListUser) {
         this.getUserMessages(user);
         return;
     }

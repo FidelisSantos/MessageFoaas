@@ -2,20 +2,20 @@
 import { initializeApp, ready } from '../../../index';
 import { ListUser } from '../../types/ListUser';
 import { UserServices } from '../../user/services/UserServices';
-import { Message } from '../message/Message';
+import { UserMessageDTO } from '../../dto/UserMessageDTO';
 
 export class User {
     private name  = "";
     private code  = 0;
     private userServices: UserServices;
-    private message : Message;
+    private userMessageDTO : UserMessageDTO;
 
     constructor() {
         this.userServices = new UserServices();
-        this.message = new Message();
+        this.userMessageDTO = new UserMessageDTO();
     }
 
-    public createMessage() {
+    public getSenderAndReceiver() {
         this.getUsersender();
         return;
     }
@@ -25,13 +25,13 @@ export class User {
         return;
     }
 
-    public getUserMessages() {
-        this.getUser();
+    public getUser() {
+        this.searchUser();
         return;
     }
     
 
-    private getUser() {
+    private searchUser() {
         const users = this.userServices.getUsers();
         users.forEach(user => 
             console.log(`Código: ${user.code} Nome: ${user.name}`)
@@ -41,7 +41,7 @@ export class User {
             if(answer != "" || answer != null || answer != undefined) {
                 const findUser = users.find(user => user.code == +answer);
                 if(findUser != undefined) {
-                    this.message.getMessage(findUser);
+                    this.userMessageDTO.getMessage(findUser);
                     return;
                 }else {
                     console.log(`Código ${+answer} não encontrado \n"`);
@@ -141,7 +141,7 @@ export class User {
             const findUser = users.find(user => user.code == +answer);
             if(findUser != undefined) {
                 userReceiver =  findUser;
-                this.message.createMessage(sender, userReceiver);
+                this.userMessageDTO.createMessage(sender, userReceiver);
                 return;
             }
             console.log(`Código: ${+answer} não encontrado`);

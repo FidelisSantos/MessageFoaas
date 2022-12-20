@@ -18,10 +18,10 @@ export class Index {
                                     this.user.createUser();
                                     break;
                                 case "2": 
-                                    this.user.createMessage();
+                                    this.user.getSenderAndReceiver();
                                     break;
                                 case "3": 
-                                    this.user.getUserMessages();
+                                    this.user.getUser();
                                     break;
                                 case "4":
                                     console.log("Encerrada \n");
