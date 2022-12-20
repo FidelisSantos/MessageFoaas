@@ -2,17 +2,17 @@
 import { initializeApp, ready } from '../../../index';
 import { ListUser } from '../../types/ListUser';
 import { UserServices } from '../../user/services/UserServices';
-import { UserMessageDTO } from '../../dto/UserMessageDTO';
+import { DTO } from '../../dto/DTO';
 
 export class User {
     private name  = "";
     private code  = 0;
     private userServices: UserServices;
-    private userMessageDTO : UserMessageDTO;
+    private userMessageDTO : DTO;
 
     constructor() {
         this.userServices = new UserServices();
-        this.userMessageDTO = new UserMessageDTO();
+        this.userMessageDTO = new DTO();
     }
 
     public getSenderAndReceiver() {

@@ -1,7 +1,7 @@
 import { ListUser } from "../types/ListUser";
 import { Message } from "../ui/message/Message";
 
-export class UserMessageDTO {
+export class DTO {
     private message : Message
 
     constructor() {
