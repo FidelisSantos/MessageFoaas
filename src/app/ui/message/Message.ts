@@ -84,7 +84,6 @@ export class Message {
     }
 
 
-
     private getSubject(sender: UserType , receiver: UserType) {
      ready.question("Informe o assunto da Mensagem:  ", (answer) => {
             console.log("\n");
