@@ -1,4 +1,4 @@
 export type UserType = {
-    name : string;
-    code : number;
-}
+  name: string;
+  code: number;
+};

@@ -1,22 +1,20 @@
-import { UserType } from "../../types/UserType";
+import { UserType } from '../../types/UserType';
 import { UserRepository } from '../repository/UserRepository';
 
-
 export class UserServices {
-    private userRepository: UserRepository
+  private userRepository: UserRepository;
 
-    constructor() {
-        this.userRepository = new UserRepository();
-    }
+  constructor() {
+    this.userRepository = new UserRepository();
+  }
 
+  public createUser(newUser: UserType) {
+    if (!this.userRepository.userExists(newUser)) return false;
+    this.userRepository.createUser(newUser);
+    return true;
+  }
 
-    public createUser(newUser : UserType) {
-        if(!this.userRepository.userExists(newUser)) return false;
-        this.userRepository.createUser(newUser);
-        return true;
-    }
-
-    public getUsers() {
-        return this.userRepository.getUsers();
-    }
+  public getUsers() {
+    return this.userRepository.getUsers();
+  }
 }

@@ -1,4 +1,4 @@
 export type TMessage = {
-    subject: string;
-    message : string;
-}
+  subject: string;
+  message: string;
+};
