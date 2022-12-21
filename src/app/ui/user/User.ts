@@ -16,17 +16,14 @@ export class User {
 
   public getSenderAndReceiver() {
     this.getSender();
-    return;
   }
 
   public createUser() {
     this.getName();
-    return;
   }
 
   public getUser() {
     this.searchUser();
-    return;
   }
 
   private searchUser() {
@@ -51,7 +48,6 @@ export class User {
         } else {
           console.log(`Favor informar um código \n`);
           initializeApp();
-          return;
         }
       }
     );
@@ -67,7 +63,6 @@ export class User {
       } else {
         console.log('Nome inválido \n');
         initializeApp();
-        return;
       }
     });
   }
@@ -91,7 +86,6 @@ export class User {
       } else {
         console.log('Código não pode ser vazio \n');
         initializeApp();
-        return;
       }
     });
   }
@@ -103,7 +97,6 @@ export class User {
       console.log('Favor cadastrar no minimo 2 usuários');
       console.log('\n');
       initializeApp();
-      return;
     }
     let userSender: UserType;
     users.forEach((user) =>
@@ -121,7 +114,6 @@ export class User {
         console.log(`Código: ${+answer} não encontrado`);
         console.log('\n');
         initializeApp();
-        return;
       }
     );
   }
@@ -150,7 +142,6 @@ export class User {
         console.log(`Código: ${+answer} não encontrado`);
         console.log('\n');
         initializeApp();
-        return;
       }
     );
   }

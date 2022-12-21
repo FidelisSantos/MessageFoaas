@@ -18,12 +18,10 @@ export class Message {
 
   public create(sender: UserType, receiver: UserType) {
     this.typeMessage(sender, receiver);
-    return;
   }
 
   public get(user: UserType) {
     this.getUserMessages(user);
-    return;
   }
 
   private getUserMessages(user: UserType) {
@@ -38,10 +36,10 @@ export class Message {
         messageSender.forEach((message) => {
           if (user.code == message.sender.code) {
             console.log(
-              `Para -> Usuário: ${message.receiver.name}, Código: ${message.receiver.code} `
+              `Destinatário -> ${message.receiver.name} Código: ${message.receiver.code} `
             );
-            console.log(`Assunto: ${message.message.subject}`);
-            console.log(`Mensagem: ${message.message.message} \n`);
+            console.log(`Assunto -> ${message.message.subject}`);
+            console.log(`Mensagem -> ${message.message.message} \n`);
           }
         });
       }
@@ -52,10 +50,10 @@ export class Message {
         messageReceiver.forEach((message) => {
           if (user.code == message.receiver.code) {
             console.log(
-              `De -> Usuário: ${message.sender.name}, Código: ${message.sender.code} `
+              `Remetente -> Usuário: ${message.sender.name} Código: ${message.sender.code} `
             );
-            console.log(`Assunto: ${message.message.subject}`);
-            console.log(`Mensagem: ${message.message.message} \n`);
+            console.log(`Assunto -> ${message.message.subject}`);
+            console.log(`Mensagem -> ${message.message.message} \n`);
           }
         });
       }
@@ -63,7 +61,6 @@ export class Message {
       console.log('Usuário não enviou e nem recebeu mensagens \n');
     }
     initializeApp();
-    return;
   }
 
   private typeMessage(sender: UserType, receiver: UserType) {
@@ -99,7 +96,6 @@ export class Message {
       }
       console.log('Assunto inválido \n');
       this.getSubject(sender, receiver);
-      return;
     });
   }
 
@@ -118,7 +114,6 @@ export class Message {
       }
       console.log('Texto inválido \n');
       this.getText(sender, receiver);
-      return;
     });
   }
 
@@ -129,10 +124,13 @@ export class Message {
     };
     if (this.messageServices.createMessage(sender, receiver, message)) {
       console.log('Mensagem enviada \n');
+      console.log(`Remetente ->${sender.name} Código ${sender.code}`);
+      console.log(`Destinatário ->${receiver.name} Código ${receiver.code}`);
+      console.log(`Assunto -> ${message.subject} `);
+      console.log(`Mensagem -> ${message.message} \n`);
     } else {
       console.log('Erro ao enviar Mensagem \n');
     }
     initializeApp();
-    return;
   }
 }
