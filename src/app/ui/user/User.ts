@@ -29,7 +29,6 @@ export class User {
         return;
     }
     
-
     private searchUser() {
         const users = this.userServices.getUsers();
         users.forEach(user => 
@@ -54,7 +53,6 @@ export class User {
             }
         })
     }
-
 
 
     private getName() {
@@ -94,7 +92,6 @@ export class User {
             }
         });
     }
-
 
 
     private getSender() {
