@@ -2,7 +2,7 @@ import { initializeApp, ready } from '../../..';
 import { MessageServices } from '../../message/services/MessageServices';
 import { TMessage } from '../../types/TMessage';
 import { Requests } from '../../requests/requests';
-import { ListUser } from '../../types/ListUser';
+import { UserType } from '../../types/UserType';
 
 export class Message {
     private messageServices: MessageServices;
@@ -16,17 +16,17 @@ export class Message {
         this.requests = new Requests();
     }
 
-    public create(sender: ListUser , receiver: ListUser) {
+    public create(sender: UserType , receiver: UserType) {
         this.typeMessage(sender , receiver);
         return;
     }
 
-    public get(user: ListUser) {
+    public get(user: UserType) {
         this.getUserMessages(user);
         return;
     }
     
-    private getUserMessages(user: ListUser) {
+    private getUserMessages(user: UserType) {
         const {messageSender , messageReceiver} = this.messageServices.getMessage(user);
         console.log("\n");
         if(messageSender.length != 0 || messageReceiver.length != 0) {
@@ -62,7 +62,7 @@ export class Message {
         return;
     }
 
-    private typeMessage(sender: ListUser , receiver: ListUser) {
+    private typeMessage(sender: UserType , receiver: UserType) {
         ready.question("Deseja enviar uma mensagem apimentada?: \n 1- SIM \n 2- NÃO \n -> ", 
         (answer) => {
             console.log("\n");
@@ -85,7 +85,7 @@ export class Message {
 
 
 
-    private getSubject(sender: ListUser , receiver: ListUser) {
+    private getSubject(sender: UserType , receiver: UserType) {
      ready.question("Informe o assunto da Mensagem:  ", (answer) => {
             console.log("\n");
             if(answer != undefined && answer != null && answer != "") {
@@ -99,7 +99,7 @@ export class Message {
         });
     }
 
-    private async getText(sender: ListUser , receiver: ListUser) {
+    private async getText(sender: UserType , receiver: UserType) {
         if(this.messageFoaas) {
             this.text = await this.requests.ApiFoaas(sender, receiver);
             this.sendMessage(sender , receiver);
@@ -118,7 +118,7 @@ export class Message {
         });
     }
 
-    private sendMessage(sender: ListUser , receiver: ListUser) {
+    private sendMessage(sender: UserType , receiver: UserType) {
         const message : TMessage = {
             subject: this.subject,
             message: this.text

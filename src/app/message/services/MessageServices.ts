@@ -1,8 +1,8 @@
 import { UserRepository } from '../../user/repository/UserRepository';
 import { MessageRepository } from '../repository/MessageRepository';
 import { TMessage } from '../../types/TMessage';
-import { ListUser } from '../../types/ListUser';
-import { ListMessage } from '../../types/ListMessage';
+import { UserType } from '../../types/UserType';
+import { MessageType} from '../../types/MessageType';
 
 export class MessageServices {
 
@@ -14,11 +14,11 @@ export class MessageServices {
         this.userRepository = new UserRepository();
     }
 
-    public createMessage(sender: ListUser, receiver: ListUser, message : TMessage) {
+    public createMessage(sender: UserType, receiver: UserType, message : TMessage) {
         if(!this.userRepository.userExists(receiver) || 
             !this.userRepository.userExists(sender) || 
             sender.code === receiver.code) return false;
-        const newMessage : ListMessage = {receiver, sender, message};
+        const newMessage : MessageType= {receiver, sender, message};
         this.messageRepository.createMessage(newMessage);
         return true;
     }
@@ -28,10 +28,10 @@ export class MessageServices {
         return;
     }
 
-    public getMessage(user: ListUser) {
+    public getMessage(user: UserType) {
         const messages = this.messageRepository.getAllMessage();
-        const messageSender : Array<ListMessage> = [];
-        const messageReceiver : Array<ListMessage> = [];
+        const messageSender : Array<MessageType> = [];
+        const messageReceiver : Array<MessageType> = [];
         messages.forEach(message =>{
             if(message.receiver.code == user.code) {
                 messageReceiver.push(message);

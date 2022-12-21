@@ -1,18 +1,18 @@
-import { ListUser } from "../types/ListUser";
+import { UserType } from "../types/UserType";
 import { Message } from "../ui/message/Message";
 
-export class DTO {
+export class UserToMessageDTO {
     private message : Message
 
     constructor() {
         this.message = new Message();
     }
 
-    public createMessage(sender : ListUser, receiver : ListUser) {
+    public createMessage(sender : UserType, receiver : UserType) {
         this.message.create(sender, receiver);
     }
 
-    public getMessage(user : ListUser) {
+    public getMessage(user : UserType) {
         this.message.get(user);
     }
 }

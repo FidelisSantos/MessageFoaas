@@ -1,10 +1,10 @@
-import { ListMessage } from '../../types/ListMessage';
+import {MessageType} from '../../types/MessageType';
 
 export class MessageRepository {
 
-    private messageRepository : Array<ListMessage> = [];
+    private messageRepository : Array<MessageType> = [];
 
-    public createMessage(message: ListMessage) {
+    public createMessage(message: MessageType) {
         this.messageRepository.push(message);
     }
 
