@@ -41,14 +41,12 @@ export class User {
             this.userMessageDTO.getMessage(findUser);
             return;
           } else {
-            console.log(`Código ${+answer} não encontrado \n"`);
-            initializeApp();
-            return;
+            console.log(`Código ${+answer} não encontrado \n`);
           }
         } else {
           console.log(`Favor informar um código \n`);
-          initializeApp();
         }
+        initializeApp();
       }
     );
   }
@@ -81,12 +79,10 @@ export class User {
         } else {
           console.log('Código informado já está sendo utilizado \n');
         }
-        initializeApp();
-        return;
       } else {
         console.log('Código não pode ser vazio \n');
-        initializeApp();
       }
+      initializeApp();
     });
   }
 
@@ -94,8 +90,7 @@ export class User {
     console.log('\n');
     const users = this.userServices.getUsers();
     if (users.length <= 1) {
-      console.log('Favor cadastrar no minimo 2 usuários');
-      console.log('\n');
+      console.log('Favor cadastrar no minimo 2 usuários \n');
       initializeApp();
     }
     let userSender: UserType;
@@ -111,8 +106,7 @@ export class User {
           this.getReceiver(users, userSender);
           return;
         }
-        console.log(`Código: ${+answer} não encontrado`);
-        console.log('\n');
+        console.log(`Código: ${+answer} não encontrado\n`);
         initializeApp();
       }
     );
@@ -139,8 +133,7 @@ export class User {
           this.userMessageDTO.createMessage(sender, userReceiver);
           return;
         }
-        console.log(`Código: ${+answer} não encontrado`);
-        console.log('\n');
+        console.log(`Código: ${+answer} não encontrado \n`);
         initializeApp();
       }
     );
