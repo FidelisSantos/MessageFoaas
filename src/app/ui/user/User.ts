@@ -28,27 +28,22 @@ export class User {
 
   private searchUser() {
     const users = this.userServices.getUsers();
-    users.forEach((user) =>
-      console.log(`Código: ${user.code} Nome: ${user.name}`)
-    );
-    ready.question(
-      'Digite o código do usuário que quer ver o histórico: ',
-      (answer) => {
-        console.log('\n');
-        if (answer != '' || answer != null || answer != undefined) {
-          const findUser = users.find((user) => user.code == +answer);
-          if (findUser != undefined) {
-            this.userMessageDTO.getMessage(findUser);
-            return;
-          } else {
-            console.log(`Código ${+answer} não encontrado \n`);
-          }
+    users.forEach((user) => console.log(`Código: ${user.code} Nome: ${user.name}`));
+    ready.question('Digite o código do usuário que quer ver o histórico: ', (answer) => {
+      console.log('\n');
+      if (answer != '' || answer != null || answer != undefined) {
+        const findUser = users.find((user) => user.code == +answer);
+        if (findUser != undefined) {
+          this.userMessageDTO.getMessage(findUser);
+          return;
         } else {
-          console.log(`Favor informar um código \n`);
+          console.log(`Código ${+answer} não encontrado \n`);
         }
-        initializeApp();
+      } else {
+        console.log(`Favor informar um código \n`);
       }
-    );
+      initializeApp();
+    });
   }
 
   private getName() {
@@ -94,48 +89,39 @@ export class User {
       initializeApp();
     }
     let userSender: UserType;
-    users.forEach((user) =>
-      console.log(`Código: ${user.code} Nome: ${user.name}`)
-    );
-    ready.question(
-      'Digite o código do usuário que enviará a mensagem: ',
-      (answer) => {
-        const findUser = users.find((user) => user.code == +answer);
-        if (findUser != undefined) {
-          userSender = findUser;
-          this.getReceiver(users, userSender);
-          return;
-        }
-        console.log(`Código: ${+answer} não encontrado\n`);
-        initializeApp();
+    users.forEach((user) => console.log(`Código: ${user.code} Nome: ${user.name}`));
+    ready.question('Digite o código do usuário que enviará a mensagem: ', (answer) => {
+      const findUser = users.find((user) => user.code == +answer);
+      if (findUser != undefined) {
+        userSender = findUser;
+        this.getReceiver(users, userSender);
+        return;
       }
-    );
+      console.log(`Código: ${+answer} não encontrado\n`);
+      initializeApp();
+    });
   }
 
   private getReceiver(users: UserType[], sender: UserType) {
     let userReceiver: UserType;
     users.forEach((user) => {
-      if (user.code != sender.code)
-        console.log(`Código: ${user.code} Nome: ${user.name}`);
+      if (user.code != sender.code) console.log(`Código: ${user.code} Nome: ${user.name}`);
     });
-    ready.question(
-      'Digite o código do usuário que receberá a mensagem: ',
-      (answer) => {
-        console.log('\n');
-        if (+answer == sender.code) {
-          console.log('Usuário não pode mandar mensagem para ele mesmo');
-          this.getReceiver(users, sender);
-          return;
-        }
-        const findUser = users.find((user) => user.code == +answer);
-        if (findUser != undefined) {
-          userReceiver = findUser;
-          this.userMessageDTO.createMessage(sender, userReceiver);
-          return;
-        }
-        console.log(`Código: ${+answer} não encontrado \n`);
-        initializeApp();
+    ready.question('Digite o código do usuário que receberá a mensagem: ', (answer) => {
+      console.log('\n');
+      if (+answer == sender.code) {
+        console.log('Usuário não pode mandar mensagem para ele mesmo');
+        this.getReceiver(users, sender);
+        return;
       }
-    );
+      const findUser = users.find((user) => user.code == +answer);
+      if (findUser != undefined) {
+        userReceiver = findUser;
+        this.userMessageDTO.createMessage(sender, userReceiver);
+        return;
+      }
+      console.log(`Código: ${+answer} não encontrado \n`);
+      initializeApp();
+    });
   }
 }

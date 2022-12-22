@@ -25,33 +25,24 @@ export class Message {
   }
 
   private getUserMessages(user: UserType) {
-    const { messageSender, messageReceiver } =
-      this.messageServices.getMessage(user);
+    const { messageSender, messageReceiver } = this.messageServices.getMessage(user);
     console.log('\n');
     if (messageSender.length != 0 || messageReceiver.length != 0) {
       if (messageSender.length > 0) {
-        console.log(
-          `Mensagens enviadas por ${user.name}, Código ${user.code} \n`
-        );
+        console.log(`Mensagens enviadas por ${user.name}, Código ${user.code} \n`);
         messageSender.forEach((message) => {
           if (user.code == message.sender.code) {
-            console.log(
-              `Destinatário -> ${message.receiver.name} Código: ${message.receiver.code} `
-            );
+            console.log(`Destinatário -> ${message.receiver.name} Código: ${message.receiver.code} `);
             console.log(`Assunto -> ${message.message.subject}`);
             console.log(`Mensagem -> ${message.message.message} \n`);
           }
         });
       }
       if (messageReceiver.length > 0) {
-        console.log(
-          `Mensagens recebidas por ${user.name}, Código ${user.code} \n`
-        );
+        console.log(`Mensagens recebidas por ${user.name}, Código ${user.code} \n`);
         messageReceiver.forEach((message) => {
           if (user.code == message.receiver.code) {
-            console.log(
-              `Remetente -> Usuário: ${message.sender.name} Código: ${message.sender.code} `
-            );
+            console.log(`Remetente -> Usuário: ${message.sender.name} Código: ${message.sender.code} `);
             console.log(`Assunto -> ${message.message.subject}`);
             console.log(`Mensagem -> ${message.message.message} \n`);
           }
@@ -64,26 +55,23 @@ export class Message {
   }
 
   private typeMessage(sender: UserType, receiver: UserType) {
-    ready.question(
-      'Deseja enviar uma mensagem apimentada?: \n 1- SIM \n 2- NÃO \n -> ',
-      (answer) => {
-        console.log('\n');
-        switch (answer) {
-          case '1':
-            this.messageFoaas = true;
-            this.getSubject(sender, receiver);
-            break;
-          case '2':
-            this.messageFoaas = false;
-            this.getSubject(sender, receiver);
-            break;
-          default:
-            console.log('Opção inválida \n');
-            this.typeMessage(sender, receiver);
-            break;
-        }
+    ready.question('Deseja enviar uma mensagem apimentada?: \n 1- SIM \n 2- NÃO \n -> ', (answer) => {
+      console.log('\n');
+      switch (answer) {
+        case '1':
+          this.messageFoaas = true;
+          this.getSubject(sender, receiver);
+          break;
+        case '2':
+          this.messageFoaas = false;
+          this.getSubject(sender, receiver);
+          break;
+        default:
+          console.log('Opção inválida \n');
+          this.typeMessage(sender, receiver);
+          break;
       }
-    );
+    });
   }
 
   private getSubject(sender: UserType, receiver: UserType) {
