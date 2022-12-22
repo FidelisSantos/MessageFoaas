@@ -13,7 +13,7 @@ export class UserRepository {
 
   public userExists(newUser: UserType) {
     const isValid = this.userList.find((user) => user.code == newUser.code);
-    if (isValid == undefined) return true;
+    if (!isValid) return true;
     return false;
   }
 }

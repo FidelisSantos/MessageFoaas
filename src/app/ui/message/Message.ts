@@ -3,6 +3,7 @@ import { MessageServices } from '../../message/services/MessageServices';
 import { TMessage } from '../../types/TMessage';
 import { Requests } from '../../requests/requests';
 import { UserType } from '../../types/UserType';
+import { MessageType } from '../../types/MessageType';
 
 export class Message {
   private messageServices: MessageServices;
@@ -27,31 +28,35 @@ export class Message {
   private getUserMessages(user: UserType) {
     const { messageSender, messageReceiver } = this.messageServices.getMessage(user);
     console.log('\n');
-    if (messageSender.length != 0 || messageReceiver.length != 0) {
-      if (messageSender.length > 0) {
-        console.log(`Mensagens enviadas por ${user.name}, Código ${user.code} \n`);
-        messageSender.forEach((message) => {
-          if (user.code == message.sender.code) {
-            console.log(`Destinatário -> ${message.receiver.name} Código: ${message.receiver.code} `);
-            console.log(`Assunto -> ${message.message.subject}`);
-            console.log(`Mensagem -> ${message.message.message} \n`);
-          }
-        });
-      }
-      if (messageReceiver.length > 0) {
-        console.log(`Mensagens recebidas por ${user.name}, Código ${user.code} \n`);
-        messageReceiver.forEach((message) => {
-          if (user.code == message.receiver.code) {
-            console.log(`Remetente -> Usuário: ${message.sender.name} Código: ${message.sender.code} `);
-            console.log(`Assunto -> ${message.message.subject}`);
-            console.log(`Mensagem -> ${message.message.message} \n`);
-          }
-        });
-      }
+    if (messageSender.length || messageReceiver.length) {
+      this.printMessages(messageSender, messageReceiver, user);
     } else {
       console.log('Usuário não enviou e nem recebeu mensagens \n');
     }
     initializeApp();
+  }
+
+  private printMessages(messageSender: MessageType[], messageReceiver: MessageType[], user: UserType) {
+    if (messageSender.length) {
+      console.log(`Mensagens enviadas por ${user.name}, Código ${user.code} \n`);
+      messageSender.forEach((message) => {
+        if (user.code == message.sender.code) {
+          console.log(`Destinatário -> ${message.receiver.name} Código: ${message.receiver.code} `);
+          console.log(`Assunto -> ${message.message.subject}`);
+          console.log(`Mensagem -> ${message.message.message} \n`);
+        }
+      });
+    }
+    if (messageReceiver.length) {
+      console.log(`Mensagens recebidas por ${user.name}, Código ${user.code} \n`);
+      messageReceiver.forEach((message) => {
+        if (user.code == message.receiver.code) {
+          console.log(`Remetente -> Usuário: ${message.sender.name} Código: ${message.sender.code} `);
+          console.log(`Assunto -> ${message.message.subject}`);
+          console.log(`Mensagem -> ${message.message.message} \n`);
+        }
+      });
+    }
   }
 
   private typeMessage(sender: UserType, receiver: UserType) {
@@ -77,7 +82,7 @@ export class Message {
   private getSubject(sender: UserType, receiver: UserType) {
     ready.question('Informe o assunto da Mensagem:  ', (answer) => {
       console.log('\n');
-      if (answer != undefined && answer != null && answer != '') {
+      if (answer) {
         this.subject = answer;
         this.getText(sender, receiver);
         return;
@@ -95,7 +100,7 @@ export class Message {
     }
     ready.question('Informe o texto da mensagem:  ', (answer) => {
       console.log('\n');
-      if (answer != undefined && answer != null && answer != '') {
+      if (answer) {
         this.text = answer;
         this.sendMessage(sender, receiver);
         return;

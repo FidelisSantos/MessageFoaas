@@ -33,7 +33,7 @@ export class User {
       console.log('\n');
       if (answer != '' || answer != null || answer != undefined) {
         const findUser = users.find((user) => user.code == +answer);
-        if (findUser != undefined) {
+        if (findUser) {
           this.userMessageDTO.getMessage(findUser);
           return;
         } else {
@@ -49,7 +49,7 @@ export class User {
   private getName() {
     ready.question('Digite um nome: ', (answer) => {
       console.log('\n');
-      if (answer.length > 0) {
+      if (answer.length) {
         this.name = answer;
         this.getCode();
         return;
@@ -63,7 +63,7 @@ export class User {
   private getCode() {
     ready.question('Digite um código: ', (answer) => {
       console.log('\n');
-      if (answer.length > 0) {
+      if (answer.length) {
         this.code = +answer;
         const newUser: UserType = {
           name: this.name,
@@ -92,7 +92,7 @@ export class User {
     users.forEach((user) => console.log(`Código: ${user.code} Nome: ${user.name}`));
     ready.question('Digite o código do usuário que enviará a mensagem: ', (answer) => {
       const findUser = users.find((user) => user.code == +answer);
-      if (findUser != undefined) {
+      if (findUser) {
         userSender = findUser;
         this.getReceiver(users, userSender);
         return;
@@ -115,7 +115,7 @@ export class User {
         return;
       }
       const findUser = users.find((user) => user.code == +answer);
-      if (findUser != undefined) {
+      if (findUser) {
         userReceiver = findUser;
         this.userMessageDTO.createMessage(sender, userReceiver);
         return;
