@@ -3,25 +3,25 @@ import { TMessage } from '../../types/TMessage';
 import { UserType } from '../../types/UserType';
 import { MessageType } from '../../types/MessageType';
 
-export class MessageServices {
+export class MessageService {
   private messageRepository: MessageRepository;
 
   constructor() {
     this.messageRepository = new MessageRepository();
   }
 
-  public createMessage(sender: UserType, receiver: UserType, message: TMessage) {
+  public create(sender: UserType, receiver: UserType, message: TMessage) {
     try {
       const newMessage: MessageType = { receiver, sender, message };
-      this.messageRepository.createMessage(newMessage);
+      this.messageRepository.create(newMessage);
       return true;
     } catch {
       return false;
     }
   }
 
-  public getMessage(user: UserType) {
-    const messages = this.messageRepository.getAllMessage();
+  public get(user: UserType) {
+    const messages = this.messageRepository.getAll();
     const messageSender: Array<MessageType> = [];
     const messageReceiver: Array<MessageType> = [];
     messages.forEach((message) => {

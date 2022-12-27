@@ -1,19 +1,19 @@
 import { initializeApp, ready } from '../../..';
-import { MessageServices } from '../../message/services/MessageServices';
+import { MessageService } from '../../message/services/MessageService';
 import { TMessage } from '../../types/TMessage';
 import { Requests } from '../../requests/requests';
 import { UserType } from '../../types/UserType';
 import { MessageType } from '../../types/MessageType';
 
 export class Message {
-  private messageServices: MessageServices;
+  private messageServices: MessageService;
   private requests: Requests;
   private subject = '';
   private text = '';
   private messageFoaas = false;
 
   constructor() {
-    this.messageServices = new MessageServices();
+    this.messageServices = new MessageService();
     this.requests = new Requests();
   }
 
@@ -26,7 +26,7 @@ export class Message {
   }
 
   private getUserMessages(user: UserType) {
-    const { messageSender, messageReceiver } = this.messageServices.getMessage(user);
+    const { messageSender, messageReceiver } = this.messageServices.get(user);
     console.log('\n');
     if (messageSender.length || messageReceiver.length) {
       this.printMessages(messageSender, messageReceiver, user);
@@ -115,7 +115,7 @@ export class Message {
       subject: this.subject,
       message: this.text
     };
-    if (this.messageServices.createMessage(sender, receiver, message)) {
+    if (this.messageServices.create(sender, receiver, message)) {
       console.log('Mensagem enviada \n');
       console.log(`Remetente ->${sender.name} Código ${sender.code}`);
       console.log(`Destinatário ->${receiver.name} Código ${receiver.code}`);

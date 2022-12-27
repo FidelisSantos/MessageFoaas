@@ -3,11 +3,11 @@ import { UserType } from '../../types/UserType';
 export class UserRepository {
   private userList: Array<UserType> = [];
 
-  public createUser(newUser: UserType) {
+  public create(newUser: UserType) {
     this.userList.push(newUser);
   }
 
-  public getUsers() {
+  public getAll() {
     return this.userList;
   }
 

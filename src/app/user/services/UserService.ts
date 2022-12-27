@@ -1,20 +1,20 @@
 import { UserType } from '../../types/UserType';
 import { UserRepository } from '../repository/UserRepository';
 
-export class UserServices {
+export class UserService {
   private userRepository: UserRepository;
 
   constructor() {
     this.userRepository = new UserRepository();
   }
 
-  public createUser(newUser: UserType) {
+  public create(newUser: UserType) {
     if (!this.userRepository.userExists(newUser)) return false;
-    this.userRepository.createUser(newUser);
+    this.userRepository.create(newUser);
     return true;
   }
 
-  public getUsers() {
-    return this.userRepository.getUsers();
+  public getAll() {
+    return this.userRepository.getAll();
   }
 }

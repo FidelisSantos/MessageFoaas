@@ -1,16 +1,16 @@
 import { initializeApp, ready } from '../../../index';
 import { UserType } from '../../types/UserType';
-import { UserServices } from '../../user/services/UserServices';
+import { UserService } from '../../user/services/UserService';
 import { UserToMessageDTO } from '../../dto/UserToMessageDTO';
 
 export class User {
   private name = '';
   private code = 0;
-  private userServices: UserServices;
+  private userServices: UserService;
   private userMessageDTO: UserToMessageDTO;
 
   constructor() {
-    this.userServices = new UserServices();
+    this.userServices = new UserService();
     this.userMessageDTO = new UserToMessageDTO();
   }
 
@@ -27,7 +27,7 @@ export class User {
   }
 
   private searchUser() {
-    const users = this.userServices.getUsers();
+    const users = this.userServices.getAll();
     users.forEach((user) => console.log(`Código: ${user.code} Nome: ${user.name}`));
     ready.question('Digite o código do usuário que quer ver o histórico: ', (answer) => {
       console.log('\n');
@@ -69,7 +69,7 @@ export class User {
           name: this.name,
           code: this.code
         };
-        if (this.userServices.createUser(newUser)) {
+        if (this.userServices.create(newUser)) {
           console.log('Usuário criado \n');
         } else {
           console.log('Código informado já está sendo utilizado \n');
@@ -83,7 +83,7 @@ export class User {
 
   private getSender() {
     console.log('\n');
-    const users = this.userServices.getUsers();
+    const users = this.userServices.getAll();
     if (users.length <= 1) {
       console.log('Favor cadastrar no minimo 2 usuários \n');
       initializeApp();
