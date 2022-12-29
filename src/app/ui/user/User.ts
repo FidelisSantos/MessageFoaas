@@ -34,7 +34,7 @@ export class User {
       if (answer != '' || answer != null || answer != undefined) {
         const findUser = users.find((user) => user.code == +answer);
         if (findUser) {
-          this.userMessageDTO.getMessage(findUser);
+          this.userMessageDTO.transportUser(findUser);
           return;
         } else {
           console.log(`Código ${+answer} não encontrado \n`);
@@ -117,7 +117,7 @@ export class User {
       const findUser = users.find((user) => user.code == +answer);
       if (findUser) {
         userReceiver = findUser;
-        this.userMessageDTO.createMessage(sender, userReceiver);
+        this.userMessageDTO.transportSenderAndReceiver(sender, userReceiver);
         return;
       }
       console.log(`Código: ${+answer} não encontrado \n`);

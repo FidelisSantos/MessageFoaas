@@ -8,11 +8,11 @@ export class UserToMessageDTO {
     this.message = new Message();
   }
 
-  public createMessage(sender: UserType, receiver: UserType) {
+  public transportSenderAndReceiver(sender: UserType, receiver: UserType) {
     this.message.create(sender, receiver);
   }
 
-  public getMessage(user: UserType) {
+  public transportUser(user: UserType) {
     this.message.get(user);
   }
 }
