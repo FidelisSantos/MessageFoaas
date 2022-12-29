@@ -15,13 +15,13 @@ export class Index {
         console.log('\n');
         switch (answer) {
           case '1':
-            this.user.createUser();
+            this.user.create();
             break;
           case '2':
             this.user.getSenderAndReceiver();
             break;
           case '3':
-            this.user.getUser();
+            this.user.get();
             break;
           case '4':
             console.log('Encerrada \n');

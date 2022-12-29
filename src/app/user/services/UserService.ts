@@ -9,7 +9,7 @@ export class UserService {
   }
 
   public create(newUser: UserType) {
-    if (!this.userRepository.userExists(newUser)) return false;
+    if (this.userRepository.userExists(newUser)) return false;
     this.userRepository.create(newUser);
     return true;
   }

@@ -1,7 +1,7 @@
 import { UserType } from '../types/UserType';
 import { Message } from '../ui/message/Message';
 
-export class UserToMessageDTO {
+export class TranspotService {
   private message: Message;
 
   constructor() {

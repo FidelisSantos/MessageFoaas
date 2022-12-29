@@ -1,28 +1,28 @@
 import { initializeApp, ready } from '../../../index';
 import { UserType } from '../../types/UserType';
 import { UserService } from '../../user/services/UserService';
-import { UserToMessageDTO } from '../../dto/UserToMessageDTO';
+import { TranspotService } from '../../dto/UserToMessageDTO';
 
 export class User {
   private name = '';
   private code = 0;
   private userServices: UserService;
-  private userMessageDTO: UserToMessageDTO;
+  private transport : TranspotService;
 
   constructor() {
     this.userServices = new UserService();
-    this.userMessageDTO = new UserToMessageDTO();
+    this.transport = new TranspotService();
   }
 
   public getSenderAndReceiver() {
     this.getSender();
   }
 
-  public createUser() {
+  public create() {
     this.getName();
   }
 
-  public getUser() {
+  public get() {
     this.searchUser();
   }
 
@@ -32,16 +32,17 @@ export class User {
     ready.question('Digite o código do usuário que quer ver o histórico: ', (answer) => {
       console.log('\n');
       if (answer != '' || answer != null || answer != undefined) {
-        const findUser = users.find((user) => user.code == +answer);
-        if (findUser) {
-          this.userMessageDTO.transportUser(findUser);
+        const user = users.find((user) => user.code == +answer);
+        if (user) {
+          this.transport.transportUser(user);
           return;
-        } else {
-          console.log(`Código ${+answer} não encontrado \n`);
         }
-      } else {
-        console.log(`Favor informar um código \n`);
-      }
+        else 
+          console.log(`Código ${+answer} não encontrado \n`);
+        
+      } else 
+          console.log(`Favor informar um código \n`);
+      
       initializeApp();
     });
   }
@@ -53,10 +54,10 @@ export class User {
         this.name = answer;
         this.getCode();
         return;
-      } else {
+      } 
         console.log('Nome inválido \n');
         initializeApp();
-      }
+      
     });
   }
 
@@ -69,14 +70,14 @@ export class User {
           name: this.name,
           code: this.code
         };
-        if (this.userServices.create(newUser)) {
-          console.log('Usuário criado \n');
-        } else {
-          console.log('Código informado já está sendo utilizado \n');
-        }
-      } else {
-        console.log('Código não pode ser vazio \n');
-      }
+        if (this.userServices.create(newUser)) 
+            console.log('Usuário criado \n');
+         else 
+            console.log('Código informado já está sendo utilizado \n');
+        
+      } else 
+          console.log('Código não pode ser vazio \n');
+      
       initializeApp();
     });
   }
@@ -87,13 +88,14 @@ export class User {
     if (users.length <= 1) {
       console.log('Favor cadastrar no minimo 2 usuários \n');
       initializeApp();
+      return;
     }
     let userSender: UserType;
     users.forEach((user) => console.log(`Código: ${user.code} Nome: ${user.name}`));
     ready.question('Digite o código do usuário que enviará a mensagem: ', (answer) => {
-      const findUser = users.find((user) => user.code == +answer);
-      if (findUser) {
-        userSender = findUser;
+      const user = users.find((user) => user.code == +answer);
+      if (user) {
+        userSender = user;
         this.getReceiver(users, userSender);
         return;
       }
@@ -114,10 +116,10 @@ export class User {
         this.getReceiver(users, sender);
         return;
       }
-      const findUser = users.find((user) => user.code == +answer);
-      if (findUser) {
-        userReceiver = findUser;
-        this.userMessageDTO.transportSenderAndReceiver(sender, userReceiver);
+      const user = users.find((user) => user.code == +answer);
+      if (user) {
+        userReceiver = user;
+        this.transport.transportSenderAndReceiver(sender, userReceiver);
         return;
       }
       console.log(`Código: ${+answer} não encontrado \n`);
